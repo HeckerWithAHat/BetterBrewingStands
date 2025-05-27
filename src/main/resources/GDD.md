@@ -44,4 +44,7 @@
 
 - Brewing Stand
   - The brewing stand itself
-- Level 
+- Level Upgrade
+  - Increases the global level of the potion effects
+- Time Upgrade 
+  - Increases the time of the potion effects
