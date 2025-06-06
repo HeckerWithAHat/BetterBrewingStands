@@ -58,6 +58,9 @@
 - Time Upgrade 
   - Increases the time of the potion effects
   - Minecraft Gold Block With a new GUI that shows a clock Or an empty slot based on if it is on or no. Turn off by powering
+- Speed Upgrade
+  - Increases the speed of the brewing stand
+  - Minecraft Coal Block with a new GUI that shows a clock Or an empty slot based on if it is on or no. Turn off by powering
 
 ### How:
 - for the custom blocks, use conduits with persisten data containers, and check for this data when rigth clicking the block

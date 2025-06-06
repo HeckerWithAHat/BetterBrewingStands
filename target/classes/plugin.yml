@@ -5,5 +5,9 @@ api-version: '1.21'
 prefix: BetterBrewingStands
 authors: [ HeckerWithAHat ]
 description:
-  My Submission to Minecraft: YSWS Edition. This idea has been in the back of my brain for so long, I decided to make it real.
+  'My Submission to Minecraft: YSWS Edition. This idea has been in the back of my brain for so long, I decided to make it real.'
 website: heckerwithahat.dev
+commands:
+  levelblock:
+    description: 'test command for Better Brewing Stands'
+    usage: '/levelblock'
