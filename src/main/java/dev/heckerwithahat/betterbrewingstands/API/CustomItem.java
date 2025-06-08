@@ -28,4 +28,9 @@ public class CustomItem extends ItemStack {
         meta.setLore(java.util.Arrays.asList(lore));
         this.setItemMeta(meta);
     }
+
+    public CustomItem(Material material) {
+        super(material);
+
+    }
 }

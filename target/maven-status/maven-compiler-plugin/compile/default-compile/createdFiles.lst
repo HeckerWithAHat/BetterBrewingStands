@@ -1,8 +1,11 @@
+dev\heckerwithahat\betterBrewingStands\API\InventorySlot.class
+dev\heckerwithahat\betterBrewingStands\API\InventorySlotType.class
+dev\heckerwithahat\betterBrewingStands\listeners\OnPlayerClickBrewingStand.class
+dev\heckerwithahat\betterBrewingStands\listeners\OnPlayerClickCustomBlock.class
 dev\heckerwithahat\betterBrewingStands\API\CustomRecipe.class
 dev\heckerwithahat\betterBrewingStands\BetterBrewingStands.class
 dev\heckerwithahat\betterBrewingStands\listeners\OnPlayerClickInInventory.class
-dev\heckerwithahat\betterBrewingStands\listeners\OnPlayerClickBrewingStand.class
+dev\heckerwithahat\betterBrewingStands\API\CustomInventory.class
 dev\heckerwithahat\betterBrewingStands\listeners\OnPlayerPlaceCustomBlock.class
 dev\heckerwithahat\betterBrewingStands\API\CustomItem.class
 dev\heckerwithahat\betterBrewingStands\API\RecipeIngredient.class
-dev\heckerwithahat\betterBrewingStands\listeners\OnPlayerClickCustomBlock.class

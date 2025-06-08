@@ -1,5 +1,8 @@
 package dev.heckerwithahat.betterBrewingStands.listeners;
 
+import dev.heckerwithahat.betterBrewingStands.API.CustomInventory;
+import dev.heckerwithahat.betterBrewingStands.API.InventorySlot;
+import dev.heckerwithahat.betterBrewingStands.API.InventorySlotType;
 import dev.heckerwithahat.betterBrewingStands.BetterBrewingStands;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -18,21 +21,29 @@ public class OnPlayerClickCustomBlock implements Listener {
 
     @EventHandler
     public void onPlayerClickCustomBlock(PlayerInteractEvent event) {
-        if (event.getHand() != EquipmentSlot.HAND || event.getClickedBlock() == null || !event.getClickedBlock().getType().equals(Material.CONDUIT)) {
+        if (event.getHand() != EquipmentSlot.HAND || event.getClickedBlock() == null || !event.getClickedBlock()
+                .getType().equals(Material.CONDUIT)) {
             return; // Ignore off-hand interaction, non-block interactions, or non-conduit blocks
         }
 
         Player player = event.getPlayer();
         Conduit conduit = (Conduit) event.getClickedBlock().getState();
 
-        if (!conduit.getPersistentDataContainer().has(Objects.requireNonNull(NamespacedKey.fromString("upgradetypeblock", BetterBrewingStands.getPlugin(BetterBrewingStands.class))))) return;
+        if (!conduit.getPersistentDataContainer().has(Objects.requireNonNull(
+                NamespacedKey.fromString("upgradetypeblock",
+                        BetterBrewingStands.getPlugin(BetterBrewingStands.class))))) return;
 
         player.sendMessage("This block is a BBS upgrade block!");
 
-        switch (Objects.requireNonNull(conduit.getPersistentDataContainer().get(Objects.requireNonNull(NamespacedKey.fromString("upgradetypeblock", BetterBrewingStands.getPlugin(BetterBrewingStands.class))), PersistentDataType.STRING))) {
+        switch (Objects.requireNonNull(conduit.getPersistentDataContainer().get(Objects.requireNonNull(
+                        NamespacedKey.fromString("upgradetypeblock", BetterBrewingStands.getPlugin(BetterBrewingStands.class))),
+                PersistentDataType.STRING))) {
             case "level" -> {
                 player.sendMessage("This is a Level Upgrade Block!");
                 // Add your logic for level upgrade block interaction here
+                CustomInventory levelInventory = new CustomInventory("Level Upgrade Block", 27,
+                        new InventorySlot(13, Material.MAGENTA_GLAZED_TERRACOTTA, InventorySlotType.DISPLAY));
+                levelInventory.open(player);
             }
             case "speed" -> {
                 player.sendMessage("This is a Speed Upgrade Block!");
