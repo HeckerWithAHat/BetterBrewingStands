@@ -1,6 +1,6 @@
-package dev.heckerwithahat.betterBrewingStands.listeners;
+package dev.heckerwithahat.betterbrewingstands.listeners;
 
-import dev.heckerwithahat.betterBrewingStands.BetterBrewingStands;
+import dev.heckerwithahat.betterbrewingstands.BetterBrewingStands;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Conduit;

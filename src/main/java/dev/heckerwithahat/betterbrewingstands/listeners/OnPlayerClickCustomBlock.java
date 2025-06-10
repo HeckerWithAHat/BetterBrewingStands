@@ -1,9 +1,9 @@
-package dev.heckerwithahat.betterBrewingStands.listeners;
+package dev.heckerwithahat.betterbrewingstands.listeners;
 
-import dev.heckerwithahat.betterBrewingStands.API.CustomInventory;
-import dev.heckerwithahat.betterBrewingStands.API.InventorySlot;
-import dev.heckerwithahat.betterBrewingStands.API.InventorySlotType;
-import dev.heckerwithahat.betterBrewingStands.BetterBrewingStands;
+import dev.heckerwithahat.betterbrewingstands.API.CustomInventory;
+import dev.heckerwithahat.betterbrewingstands.API.InventorySlot;
+import dev.heckerwithahat.betterbrewingstands.API.InventorySlotType;
+import dev.heckerwithahat.betterbrewingstands.BetterBrewingStands;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;

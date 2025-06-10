@@ -1,4 +1,4 @@
-package dev.heckerwithahat.betterBrewingStands.API;
+package dev.heckerwithahat.betterbrewingstands.API;
 
 public enum InventorySlotType {
     BUTTON,

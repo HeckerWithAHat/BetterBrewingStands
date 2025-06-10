@@ -1,8 +1,8 @@
-package dev.heckerwithahat.betterBrewingStands;
+package dev.heckerwithahat.betterbrewingstands;
 
-import dev.heckerwithahat.betterBrewingStands.API.CustomItem;
-import dev.heckerwithahat.betterBrewingStands.API.CustomRecipe;
-import dev.heckerwithahat.betterBrewingStands.API.RecipeIngredient;
+import dev.heckerwithahat.betterbrewingstands.API.CustomItem;
+import dev.heckerwithahat.betterbrewingstands.API.CustomRecipe;
+import dev.heckerwithahat.betterbrewingstands.API.RecipeIngredient;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

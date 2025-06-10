@@ -1,4 +1,4 @@
-package dev.heckerwithahat.betterBrewingStands.API;
+package dev.heckerwithahat.betterbrewingstands.API;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

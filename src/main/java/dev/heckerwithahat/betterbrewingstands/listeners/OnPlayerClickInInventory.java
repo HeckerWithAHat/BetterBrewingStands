@@ -1,4 +1,4 @@
-package dev.heckerwithahat.betterBrewingStands.listeners;
+package dev.heckerwithahat.betterbrewingstands.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

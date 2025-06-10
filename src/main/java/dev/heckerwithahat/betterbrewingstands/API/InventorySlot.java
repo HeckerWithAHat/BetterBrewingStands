@@ -1,6 +1,6 @@
-package dev.heckerwithahat.betterBrewingStands.API;
+package dev.heckerwithahat.betterbrewingstands.API;
 
-import dev.heckerwithahat.betterBrewingStands.BetterBrewingStands;
+import dev.heckerwithahat.betterbrewingstands.BetterBrewingStands;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
@@ -14,8 +14,11 @@ public class InventorySlot {
 
     public InventorySlot(int slot, CustomItem item, InventorySlotType type) {
         this.slot = slot;
-        this.item = item;
         this.type = type;
+        Objects.requireNonNull(this.item.getItemMeta()).getPersistentDataContainer().set(
+                Objects.requireNonNull(NamespacedKey.fromString("custominventoryslottype",
+                        BetterBrewingStands.getPlugin(BetterBrewingStands.class))), PersistentDataType.STRING,
+                type.name());        this.item = item;
     }
 
     public InventorySlot(int slot, Material item, InventorySlotType type) {
