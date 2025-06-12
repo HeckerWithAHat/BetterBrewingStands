@@ -1,16 +1,14 @@
 package dev.heckerwithahat.betterbrewingstands.listeners;
 
-import dev.heckerwithahat.betterbrewingstands.API.CustomInventory;
-import dev.heckerwithahat.betterbrewingstands.API.InventorySlot;
-import dev.heckerwithahat.betterbrewingstands.API.InventorySlotType;
 import dev.heckerwithahat.betterbrewingstands.BetterBrewingStands;
+import dev.heckerwithahat.betterbrewingstands.GUIs.*;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
 import org.bukkit.block.Conduit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.persistence.PersistentDataType;
@@ -21,41 +19,30 @@ public class OnPlayerClickCustomBlock implements Listener {
 
     @EventHandler
     public void onPlayerClickCustomBlock(PlayerInteractEvent event) {
-        if (event.getHand() != EquipmentSlot.HAND || event.getClickedBlock() == null || !event.getClickedBlock()
-                .getType().equals(Material.CONDUIT)) {
-            return; // Ignore off-hand interaction, non-block interactions, or non-conduit blocks
-        }
+        /* Avoid double click, and force to be custom upgrade block */  if (event.getHand() != EquipmentSlot.HAND || event.getClickedBlock() == null || !event.getClickedBlock().getType().equals(Material.CONDUIT) || !((Conduit) event.getClickedBlock().getState()).getPersistentDataContainer().has(Objects.requireNonNull(NamespacedKey.fromString("upgradetypeblock", BetterBrewingStands.getPlugin(BetterBrewingStands.class))))) return;
 
         Player player = event.getPlayer();
         Conduit conduit = (Conduit) event.getClickedBlock().getState();
-
-        if (!conduit.getPersistentDataContainer().has(Objects.requireNonNull(
-                NamespacedKey.fromString("upgradetypeblock",
-                        BetterBrewingStands.getPlugin(BetterBrewingStands.class))))) return;
-
-        player.sendMessage("This block is a BBS upgrade block!");
-
-        switch (Objects.requireNonNull(conduit.getPersistentDataContainer().get(Objects.requireNonNull(
-                        NamespacedKey.fromString("upgradetypeblock", BetterBrewingStands.getPlugin(BetterBrewingStands.class))),
-                PersistentDataType.STRING))) {
+        switch (Objects.requireNonNull(conduit.getPersistentDataContainer().get(Objects.requireNonNull(NamespacedKey.fromString("upgradetypeblock", BetterBrewingStands.getPlugin(BetterBrewingStands.class))), PersistentDataType.STRING))) {
             case "level" -> {
-                player.sendMessage("This is a Level Upgrade Block!");
-                // Add your logic for level upgrade block interaction here
-                CustomInventory levelInventory = new CustomInventory("Level Upgrade Block", 27,
-                        new InventorySlot(13, Material.MAGENTA_GLAZED_TERRACOTTA, InventorySlotType.DISPLAY));
-                levelInventory.open(player);
+                if (!event.getClickedBlock().isBlockPowered())
+                    new LevelGuiOn(player).open();
+                else new LevelGuiOff(player).open();
             }
             case "speed" -> {
-                player.sendMessage("This is a Speed Upgrade Block!");
-                // Add your logic for speed upgrade block interaction here
+                if (!event.getClickedBlock().isBlockPowered())
+                    new SpeedGuiOn(player).open();
+                else new SpeedGuiOff(player).open();
             }
             case "time" -> {
-                player.sendMessage("This is a Time Upgrade Block!");
-                // Add your logic for time upgrade block interaction here
+                if (!event.getClickedBlock().isBlockPowered())
+                    new TimeGuiOn(player).open();
+                else new TimeGuiOff(player).open();
             }
             case "water" -> {
-                player.sendMessage("This is a Water Upgrade Block!");
-                // Add your logic for water upgrade block interaction here
+                if (!event.getClickedBlock().isBlockPowered())
+                    new WaterGuiOn(player).open();
+                else new WaterGuiOff(player).open();
             }
             default -> {
                 player.sendMessage("Unknown upgrade block type! Please contact the developer.");

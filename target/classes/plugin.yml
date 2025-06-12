@@ -1,6 +1,6 @@
 name: BetterBrewingStands
 version: '1.0-DEVELOPMENT'
-main: dev.heckerwithahat.betterBrewingStands.BetterBrewingStands
+main: dev.heckerwithahat.betterbrewingstands.BetterBrewingStands
 api-version: '1.21'
 prefix: BetterBrewingStands
 authors: [ HeckerWithAHat ]

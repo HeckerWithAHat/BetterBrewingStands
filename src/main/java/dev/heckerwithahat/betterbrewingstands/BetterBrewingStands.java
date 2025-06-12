@@ -3,6 +3,7 @@ package dev.heckerwithahat.betterbrewingstands;
 import dev.heckerwithahat.betterbrewingstands.API.CustomItem;
 import dev.heckerwithahat.betterbrewingstands.API.CustomRecipe;
 import dev.heckerwithahat.betterbrewingstands.API.RecipeIngredient;
+import mc.obliviate.inventory.InventoryAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -42,7 +43,7 @@ public final class BetterBrewingStands extends JavaPlugin {
                 throw new RuntimeException(e);
             }
         }
-
+        new InventoryAPI(this).init();
         LEVEL_BLOCK = new CustomItem(org.bukkit.Material.DIAMOND_BLOCK, 1, "Level Upgrade Block", new String[]{"This block is used to upgrade brewing stands", "Place it next to a brewing stand to upgrade it", "Provide it with a redstone signal to deactivate it", "Increases the potency of all potions brewed in the stand"}, true, "level");
         WATER_BLOCK = new CustomItem(org.bukkit.Material.LAPIS_BLOCK, 1, "Water Upgrade Block", new String[]{"This block is used to upgrade brewing stands", "Place it next to a brewing stand to upgrade it", "Provide it with a redstone signal to deactivate it", "Provide infinite water to the brewing stand"}, true, "water");
         TIME_BLOCK = new CustomItem(org.bukkit.Material.GOLD_BLOCK, 1, "Time Upgrade Block", new String[]{"This block is used to upgrade brewing stands", "Place it next to a brewing stand to upgrade it", "Provide it with a redstone signal to deactivate it", "Increases the effect time of all potions brewed in the stand"}, true, "time");
