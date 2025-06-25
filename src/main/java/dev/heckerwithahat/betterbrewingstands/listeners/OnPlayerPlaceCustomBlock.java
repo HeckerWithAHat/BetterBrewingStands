@@ -17,12 +17,9 @@ public class OnPlayerPlaceCustomBlock implements Listener {
     @EventHandler
     public void onPlayerPlaceCustomBlock(BlockPlaceEvent event) {
         // This method will handle the event when a player places a custom block
-        if (Objects.requireNonNull(event.getItemInHand().getItemMeta()).getPersistentDataContainer().has(
-                Objects.requireNonNull(NamespacedKey.fromString("upgradetypeitem",
-                        BetterBrewingStands.getPlugin(BetterBrewingStands.class))))) {
+        if (Objects.requireNonNull(event.getItemInHand().getItemMeta()).getPersistentDataContainer().has(Objects.requireNonNull(NamespacedKey.fromString("upgradetypeitem", BetterBrewingStands.getPlugin(BetterBrewingStands.class))))) {
             event.getBlockPlaced().setType(Material.CONDUIT);
-            Conduit block = (Conduit) event.getBlockPlaced().getWorld().getBlockAt(
-                    event.getBlockPlaced().getLocation()).getState();
+            Conduit block = (Conduit) event.getBlockPlaced().getWorld().getBlockAt(event.getBlockPlaced().getLocation()).getState();
             block.getPersistentDataContainer().set(Objects.requireNonNull(NamespacedKey.fromString("upgradetypeblock",
                             BetterBrewingStands.getPlugin(BetterBrewingStands.class))),
                     org.bukkit.persistence.PersistentDataType.STRING,

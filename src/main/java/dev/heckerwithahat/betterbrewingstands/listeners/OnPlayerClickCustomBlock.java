@@ -19,7 +19,7 @@ public class OnPlayerClickCustomBlock implements Listener {
 
     @EventHandler
     public void onPlayerClickCustomBlock(PlayerInteractEvent event) {
-        /* Avoid double click, and force to be custom upgrade block */  if (event.getHand() != EquipmentSlot.HAND || event.getClickedBlock() == null || !event.getClickedBlock().getType().equals(Material.CONDUIT) || !((Conduit) event.getClickedBlock().getState()).getPersistentDataContainer().has(Objects.requireNonNull(NamespacedKey.fromString("upgradetypeblock", BetterBrewingStands.getPlugin(BetterBrewingStands.class))))) return;
+        /* Avoid double click, left click, and shift click, and force to be custom upgrade block */  if (event.getHand() != EquipmentSlot.HAND || event.getClickedBlock() == null || event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getPlayer().isSneaking() || !event.getClickedBlock().getType().equals(Material.CONDUIT) || !((Conduit) event.getClickedBlock().getState()).getPersistentDataContainer().has(Objects.requireNonNull(NamespacedKey.fromString("upgradetypeblock", BetterBrewingStands.getPlugin(BetterBrewingStands.class))))) return;
 
         Player player = event.getPlayer();
         Conduit conduit = (Conduit) event.getClickedBlock().getState();
