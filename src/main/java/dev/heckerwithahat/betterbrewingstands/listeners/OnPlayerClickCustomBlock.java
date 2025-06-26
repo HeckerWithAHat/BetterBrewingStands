@@ -29,27 +29,12 @@ public class OnPlayerClickCustomBlock implements Listener {
                     new LevelGuiOn(player).open();
                 else new LevelGuiOff(player).open();
             }
-            case "speed" -> {
-                if (!event.getClickedBlock().isBlockPowered())
-                    new SpeedGuiOn(player).open();
-                else new SpeedGuiOff(player).open();
-            }
             case "time" -> {
                 if (!event.getClickedBlock().isBlockPowered())
                     new TimeGuiOn(player).open();
                 else new TimeGuiOff(player).open();
             }
-            case "water" -> {
-                if (!event.getClickedBlock().isBlockPowered())
-                    new WaterGuiOn(player).open();
-                else new WaterGuiOff(player).open();
-            }
-            default -> {
-                player.sendMessage("Unknown upgrade block type! Please contact the developer.");
-                // Handle unknown upgrade block types if necessary
-            }
-
+            default -> player.sendMessage("Unknown upgrade block type! Please contact the developer.");
         }
-
     }
 }

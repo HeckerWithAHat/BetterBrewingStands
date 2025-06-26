@@ -12,7 +12,11 @@ import org.bukkit.block.BrewingStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -34,29 +38,46 @@ public class BrewingStandGUI extends Gui {
         stand = (BrewingStand) player.getTargetBlock(set, ((int) player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE).getDefaultValue())).getState();
         levelUpgradeCount = stand.getPersistentDataContainer().get(key("levelupgradecount"), PersistentDataType.INTEGER);
         timeUpgradeCount = stand.getPersistentDataContainer().get(key("timeupgradecount"), PersistentDataType.INTEGER);
-        speedUpgradeCount = stand.getPersistentDataContainer().get(key("speedupgradecount"), PersistentDataType.INTEGER);
-        waterUpgradeCount = stand.getPersistentDataContainer().get(key("waterupgradecount"), PersistentDataType.INTEGER);
     }
 
     @Override
     public void onOpen(InventoryOpenEvent event) {
         AdvancedSlotManager advancedSlotManager = new AdvancedSlotManager(this);
+        fillGui(new Icon(Material.GRAY_STAINED_GLASS_PANE), List.of(10, 11, 12, 13, 14, 16, 19, 20, 21, 22, 23, 28, 29, 30, 31, 32, 34, 48, 50));
 
-        addItem(new Icon(new ItemStack(Material.WATER_BUCKET, waterUpgradeCount)), 27);
-        addItem(new Icon(new ItemStack(Material.MAGENTA_GLAZED_TERRACOTTA, levelUpgradeCount)), 29);
-        addItem(new Icon(new ItemStack(Material.CLOCK, timeUpgradeCount)), 31);
-        addItem(new Icon(new ItemStack(Material.REDSTONE, speedUpgradeCount)), 33);
-        fillGui(new Icon(Material.GRAY_STAINED_GLASS_PANE), List.of(27, 29, 31, 33, 35));
+        for (int i = 0; i < 5; i++) {
+            AdvancedSlot fuelSlot = advancedSlotManager.addAdvancedIcon(10+i, new Icon(Material.BARRIER).setName("Missing Blaze Powder"));
+            fuelSlot.onPrePutClick((e, item) -> {
+                if (!item.getType().equals(Material.BLAZE_POWDER)) {
+                    player.sendMessage("You cannot put items here except Blaze Powder!");
+                    return true;
+                }
+                return false;
+            });
+            AdvancedSlot wartSlot = advancedSlotManager.addAdvancedIcon(19+i, new Icon(Material.BARRIER).setName("Missing Nether Wart"));
+            wartSlot.onPrePutClick((e, item) -> {
+                if (!item.getType().equals(Material.NETHER_WART)) {
+                    player.sendMessage("You cannot put items here except Nether Wart!");
+                    return true;
+                }
+                return false;
+            });
+            AdvancedSlot catalystSlot = advancedSlotManager.addAdvancedIcon(28+i, new Icon(Material.BARRIER).setName("Missing Effect Catalyst"));
 
-        AdvancedSlot fuelSlot = advancedSlotManager.addAdvancedIcon(35, new Icon(new ItemStack(Material.BARRIER)).setName("Fuel Slot"));
-        fuelSlot.onPrePutClick((e, item) -> {
-            if (!item.getType().equals(Material.BLAZE_POWDER)) {
-                player.sendMessage("You cannot put items here except Blaze Powder!");
+        }
+        addItem(new Icon(new ItemStack(Material.MAGENTA_GLAZED_TERRACOTTA, levelUpgradeCount)), 16);
+        addItem(new Icon(new ItemStack(Material.CLOCK, timeUpgradeCount)), 34);
+
+
+        addItem(new Icon(Material.BREWING_STAND), 48);
+        AdvancedSlot bottleInput = advancedSlotManager.addAdvancedIcon(50, new Icon(Material.AIR));
+        bottleInput.onPrePutClick((e, item) -> {
+            if (item.getType() != Material.POTION && item.getType() != Material.SPLASH_POTION && item.getType() != Material.LINGERING_POTION) {
+                player.sendMessage("You can only put Potions here!");
                 return true;
             }
             return false;
         });
-
     }
 
 
@@ -65,4 +86,33 @@ public class BrewingStandGUI extends Gui {
     public NamespacedKey key(String id) {
         return NamespacedKey.fromString(id, BetterBrewingStands.getPlugin(BetterBrewingStands.class));
     }
+
+    public void brew() {
+
+        // Iterate through each set of slots (fuel, wart, catalyst)
+                for (int i = 0; i < 5; i++) {
+                    ItemStack fuel = getInventory().getItem(10 + i);
+                    ItemStack wart = getInventory().getItem(19 + i);
+                    ItemStack catalyst = getInventory().getItem(28 + i);
+                    ItemStack bottle = getInventory().getItem(50);
+
+                    if (fuel != null && fuel.getType() == Material.BLAZE_POWDER &&
+                        wart != null && wart.getType() == Material.NETHER_WART &&
+                        catalyst != null && catalyst.getType() != Material.AIR &&
+                        bottle != null && (bottle.getType() == Material.POTION || bottle.getType() == Material.SPLASH_POTION || bottle.getType() == Material.LINGERING_POTION)) {
+
+                        // Example: Use catalyst type to determine effect, here using SPEED as a placeholder
+                        PotionEffect effect = new PotionEffect(
+                                PotionEffectType.SPEED,
+                                (int) (20 * 60 * 3 * Math.pow(1.1, timeUpgradeCount)), // 3 min base, scaled
+                                levelUpgradeCount - 1 // PotionEffect levels are 0-based
+                        );
+                        PotionMeta meta = (PotionMeta) bottle.getItemMeta();
+                        meta.addCustomEffect(effect, true);
+                        bottle.setItemMeta(meta);
+                    }
+                }
+
+    }
+
 }

@@ -25,8 +25,6 @@ public class OnPlayerClickBrewingStand implements Listener {
 
         int levelUpgradeCount = 0;
         int timeUpgradeCount = 0;
-        int speedUpgradeCount = 0;
-        int waterUpgradeCount = 0;
 
         for (int x = -2; x <= 2; x++)
             for (int z = -2; z <= 2; z++)
@@ -34,18 +32,13 @@ public class OnPlayerClickBrewingStand implements Listener {
                     switch (Objects.requireNonNull(((Conduit) stand.getWorld().getBlockAt(stand.getLocation().add(x, 0, z)).getState()).getPersistentDataContainer().get(Objects.requireNonNull(key("upgradetypeblock")), PersistentDataType.STRING))) {
                         case "level" -> levelUpgradeCount++;
                         case "time" -> timeUpgradeCount++;
-                        case "speed" -> speedUpgradeCount++;
-                        case "water" -> waterUpgradeCount++;
                     }
 
 
         stand.getPersistentDataContainer().set(key("levelupgradecount"), PersistentDataType.INTEGER, levelUpgradeCount);
         stand.getPersistentDataContainer().set(key("timeupgradecount"), PersistentDataType.INTEGER, timeUpgradeCount);
-        stand.getPersistentDataContainer().set(key("speedupgradecount"), PersistentDataType.INTEGER, speedUpgradeCount);
-        stand.getPersistentDataContainer().set(key("waterupgradecount"), PersistentDataType.INTEGER, waterUpgradeCount);
         stand.update();
         new BrewingStandGUI(event.getPlayer()).open();
-
     }
 
 
