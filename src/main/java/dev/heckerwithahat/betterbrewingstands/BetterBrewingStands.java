@@ -13,7 +13,9 @@ import org.bukkit.block.BrewingStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionType;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -25,10 +27,11 @@ public final class BetterBrewingStands extends JavaPlugin {
     public static CustomItem TIME_BLOCK;
     public static CustomItem ENCHANTED_DIAMOND;
 
-
     public static CustomRecipe LEVEL_BLOCK_RECIPE;
     public static CustomRecipe TIME_BLOCK_RECIPE;
     public static CustomRecipe ENCHANTED_DIAMOND_RECIPE;
+    public static CustomRecipe SPLASH_WATER_BOTTLE_RECIPE;
+    public static CustomRecipe LINGER_WATER_BOTTLE_RECIPE;
 
 
 
@@ -54,6 +57,16 @@ public final class BetterBrewingStands extends JavaPlugin {
         TIME_BLOCK = new CustomItem(org.bukkit.Material.GOLD_BLOCK, 1, "Time Upgrade Block", new String[]{"This block is used to upgrade brewing stands", "Place it next to a brewing stand to upgrade it", "Provide it with a redstone signal to deactivate it", "Increases the effect time of all potions brewed in the stand"}, true, "time");
         ENCHANTED_DIAMOND = new CustomItem(Material.DIAMOND, 1, "Enchanted Diamond", new String[]{"This diamond is used to craft the level upgrade for brewing stands"}, true);
 
+        CustomItem splashWaterBottle = new CustomItem(Material.SPLASH_POTION, 1, "Splash Water Bottle", new String[]{}, true);
+        PotionMeta splashMeta = (PotionMeta) splashWaterBottle.getItemMeta();
+        splashMeta.setBasePotionType(PotionType.WATER);
+        splashWaterBottle.setItemMeta(splashMeta);
+        CustomItem lingeringWaterBottle = new CustomItem(Material.LINGERING_POTION, 1, "Lingering Water Bottle", new String[]{}, true);
+        PotionMeta lingeringMeta = (PotionMeta) lingeringWaterBottle.getItemMeta();
+        lingeringMeta.setBasePotionType(PotionType.WATER);
+        lingeringWaterBottle.setItemMeta(lingeringMeta);
+
+
         LEVEL_BLOCK_RECIPE = new CustomRecipe(NamespacedKey.fromString("upgradelevelrecipe", this), LEVEL_BLOCK, new String[]{"XZX", "ZYZ", "XZX"},
                 new RecipeIngredient('X', new RecipeChoice.MaterialChoice(Material.GHAST_TEAR)),
                 new RecipeIngredient('Y', new RecipeChoice.ExactChoice(ENCHANTED_DIAMOND)),
@@ -66,7 +79,21 @@ public final class BetterBrewingStands extends JavaPlugin {
         ENCHANTED_DIAMOND_RECIPE = new CustomRecipe(NamespacedKey.fromString("enchanteddiamondrecipe", this), ENCHANTED_DIAMOND, new String[]{" D ", "DAD", " D "},
                 new RecipeIngredient('D', new RecipeChoice.MaterialChoice(Material.DIAMOND_BLOCK)),
                 new RecipeIngredient('A', new RecipeChoice.MaterialChoice(Material.ENCHANTED_GOLDEN_APPLE)));
+        SPLASH_WATER_BOTTLE_RECIPE = new CustomRecipe(
+                NamespacedKey.fromString("splashwaterbottlerecipe", this),
+                splashWaterBottle,
+                new String[]{" G ", "GWG", " G "},
+                new RecipeIngredient('G', new RecipeChoice.MaterialChoice(Material.GUNPOWDER)),
+                new RecipeIngredient('W', new RecipeChoice.MaterialChoice(Material.POTION))
+        );
 
+        LINGER_WATER_BOTTLE_RECIPE = new CustomRecipe(
+                NamespacedKey.fromString("lingeringwaterbottlerecipe", this),
+                lingeringWaterBottle,
+                new String[]{"   ", "DWD", "   "},
+                new RecipeIngredient('D', new RecipeChoice.MaterialChoice(Material.DRAGON_BREATH)),
+                new RecipeIngredient('W', new RecipeChoice.MaterialChoice(Material.POTION))
+        );
     }
 
     @Override

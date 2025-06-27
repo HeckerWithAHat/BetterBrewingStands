@@ -8,5 +8,6 @@ dev\heckerwithahat\betterbrewingstands\GUIs\LevelGuiOff.class
 dev\heckerwithahat\betterbrewingstands\GUIs\LevelGuiOn.class
 dev\heckerwithahat\betterbrewingstands\API\CustomItem.class
 dev\heckerwithahat\betterbrewingstands\listeners\OnPlayerClickCustomBlock.class
+dev\heckerwithahat\betterbrewingstands\listeners\OnPlayerBreakCustomBlock.class
 dev\heckerwithahat\betterbrewingstands\GUIs\TimeGuiOff.class
 dev\heckerwithahat\betterbrewingstands\BetterBrewingStands.class
