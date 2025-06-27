@@ -17,7 +17,7 @@ public class TimeGuiOn extends Gui {
 
     @Override
     public void onOpen(InventoryOpenEvent event) {
-        addItem(new Icon(Material.MAGENTA_GLAZED_TERRACOTTA).setName("+20% Effect Duration for all potions"), 13);
-        fillGui(new Icon(Material.GRAY_STAINED_GLASS_PANE), Collections.singleton(13));
+        addItem(new Icon(Material.CLOCK).setName("+10% Effect Duration for all potions"), 13);
+        fillGui(new Icon(Material.GRAY_STAINED_GLASS_PANE).setName(" "), Collections.singleton(13));
     }
 }

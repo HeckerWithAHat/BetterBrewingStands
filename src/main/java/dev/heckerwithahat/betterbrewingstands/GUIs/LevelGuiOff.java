@@ -18,6 +18,6 @@ public class LevelGuiOff extends Gui {
     @Override
     public void onOpen(InventoryOpenEvent event) {
         addItem(new Icon(Material.BARRIER).setName("Level Upgrade Block is Off"), 13);
-        fillGui(new Icon(Material.GRAY_STAINED_GLASS_PANE), Collections.singleton(13));
+        fillGui(new Icon(Material.GRAY_STAINED_GLASS_PANE).setName(" "), Collections.singleton(13));
     }
 }

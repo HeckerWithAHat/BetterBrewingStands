@@ -23,19 +23,19 @@ public class OnPlayerClickBrewingStand implements Listener {
         event.setCancelled(true);
         BrewingStand stand = (BrewingStand) event.getClickedBlock().getState();
 
-        int levelUpgradeCount = 0;
-        int timeUpgradeCount = 0;
+        int levelUpgradeCount = 1;
+        int timeUpgradeCount = 1;
 
-        for (int x = -2; x <= 2; x++)
-            for (int z = -2; z <= 2; z++)
-                if ((x == -2 || x == 2 || z == -2 || z == 2) && stand.getWorld().getBlockAt(stand.getLocation().add(x, 0, z)).getState() instanceof Conduit && ((Conduit) stand.getWorld().getBlockAt(stand.getLocation().add(x, 0, z)).getState()).getPersistentDataContainer().has(key("upgradetypeblock")))
+        for (int x = -1; x <= 1; x++)
+            for (int z = -1; z <= 1; z++)
+                if ((x != 0 || z != 0) && stand.getWorld().getBlockAt(stand.getLocation().add(x, 0, z)).getState() instanceof Conduit && ((Conduit) stand.getWorld().getBlockAt(stand.getLocation().add(x, 0, z)).getState()).getPersistentDataContainer().has(key("upgradetypeblock")))
                     switch (Objects.requireNonNull(((Conduit) stand.getWorld().getBlockAt(stand.getLocation().add(x, 0, z)).getState()).getPersistentDataContainer().get(Objects.requireNonNull(key("upgradetypeblock")), PersistentDataType.STRING))) {
                         case "level" -> levelUpgradeCount++;
                         case "time" -> timeUpgradeCount++;
                     }
 
 
-        stand.getPersistentDataContainer().set(key("levelupgradecount"), PersistentDataType.INTEGER, levelUpgradeCount);
+        stand.getPersistentDataContainer().set(key("levelupgradecount"), PersistentDataType.INTEGER, Math.clamp(levelUpgradeCount, 1, 5));
         stand.getPersistentDataContainer().set(key("timeupgradecount"), PersistentDataType.INTEGER, timeUpgradeCount);
         stand.update();
         new BrewingStandGUI(event.getPlayer()).open();

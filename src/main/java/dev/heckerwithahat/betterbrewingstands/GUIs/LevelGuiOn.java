@@ -18,6 +18,6 @@ public class LevelGuiOn extends Gui {
     @Override
     public void onOpen(InventoryOpenEvent event) {
         addItem(new Icon(Material.MAGENTA_GLAZED_TERRACOTTA).setName("+1 Level to all Potion Effects"), 13);
-        fillGui(new Icon(Material.GRAY_STAINED_GLASS_PANE), Collections.singleton(13));
+        fillGui(new Icon(Material.GRAY_STAINED_GLASS_PANE).setName(" "), Collections.singleton(13));
     }
 }

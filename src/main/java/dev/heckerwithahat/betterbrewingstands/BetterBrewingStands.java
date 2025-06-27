@@ -23,14 +23,18 @@ public final class BetterBrewingStands extends JavaPlugin {
 
     public static CustomItem LEVEL_BLOCK;
     public static CustomItem TIME_BLOCK;
+    public static CustomItem ENCHANTED_DIAMOND;
+
 
     public static CustomRecipe LEVEL_BLOCK_RECIPE;
     public static CustomRecipe TIME_BLOCK_RECIPE;
+    public static CustomRecipe ENCHANTED_DIAMOND_RECIPE;
 
 
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         // Plugin startup logic
         getLogger().info("BetterBrewingStands has been enabled!");
         // Register commands, listeners, etc. here
@@ -48,17 +52,20 @@ public final class BetterBrewingStands extends JavaPlugin {
         new InventoryAPI(this).init();
         LEVEL_BLOCK = new CustomItem(org.bukkit.Material.DIAMOND_BLOCK, 1, "Level Upgrade Block", new String[]{"This block is used to upgrade brewing stands", "Place it next to a brewing stand to upgrade it", "Provide it with a redstone signal to deactivate it", "Increases the potency of all potions brewed in the stand"}, true, "level");
         TIME_BLOCK = new CustomItem(org.bukkit.Material.GOLD_BLOCK, 1, "Time Upgrade Block", new String[]{"This block is used to upgrade brewing stands", "Place it next to a brewing stand to upgrade it", "Provide it with a redstone signal to deactivate it", "Increases the effect time of all potions brewed in the stand"}, true, "time");
-
+        ENCHANTED_DIAMOND = new CustomItem(Material.DIAMOND, 1, "Enchanted Diamond", new String[]{"This diamond is used to craft the level upgrade for brewing stands"}, true);
 
         LEVEL_BLOCK_RECIPE = new CustomRecipe(NamespacedKey.fromString("upgradelevelrecipe", this), LEVEL_BLOCK, new String[]{"XZX", "ZYZ", "XZX"},
-                new RecipeIngredient('X', new RecipeChoice.MaterialChoice(Material.DIAMOND_BLOCK)),
-                new RecipeIngredient('Y', new RecipeChoice.MaterialChoice(Material.GHAST_TEAR)),
+                new RecipeIngredient('X', new RecipeChoice.MaterialChoice(Material.GHAST_TEAR)),
+                new RecipeIngredient('Y', new RecipeChoice.ExactChoice(ENCHANTED_DIAMOND)),
                 new RecipeIngredient('Z', new RecipeChoice.MaterialChoice(Material.BLAZE_POWDER)));
 
         TIME_BLOCK_RECIPE = new CustomRecipe(NamespacedKey.fromString("upgradetimerecipe", this), TIME_BLOCK, new String[]{"XZX", "ZYZ", "XZX"},
                 new RecipeIngredient('X', new RecipeChoice.MaterialChoice(Material.GOLD_BLOCK)),
                 new RecipeIngredient('Y', new RecipeChoice.MaterialChoice(Material.CLOCK)),
                 new RecipeIngredient('Z', new RecipeChoice.MaterialChoice(Material.BLAZE_POWDER)));
+        ENCHANTED_DIAMOND_RECIPE = new CustomRecipe(NamespacedKey.fromString("enchanteddiamondrecipe", this), ENCHANTED_DIAMOND, new String[]{" D ", "DAD", " D "},
+                new RecipeIngredient('D', new RecipeChoice.MaterialChoice(Material.DIAMOND_BLOCK)),
+                new RecipeIngredient('A', new RecipeChoice.MaterialChoice(Material.ENCHANTED_GOLDEN_APPLE)));
 
     }
 

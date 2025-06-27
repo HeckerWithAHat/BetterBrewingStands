@@ -1,16 +1,12 @@
-dev\heckerwithahat\betterbrewingstands\GUIs\WaterGuiOff.class
 dev\heckerwithahat\betterbrewingstands\GUIs\TimeGuiOn.class
 dev\heckerwithahat\betterbrewingstands\API\RecipeIngredient.class
 dev\heckerwithahat\betterbrewingstands\listeners\OnPlayerClickBrewingStand.class
 dev\heckerwithahat\betterbrewingstands\listeners\OnPlayerPlaceCustomBlock.class
-dev\heckerwithahat\betterbrewingstands\GUIs\SpeedGuiOn.class
 dev\heckerwithahat\betterbrewingstands\API\CustomRecipe.class
 dev\heckerwithahat\betterbrewingstands\GUIs\BrewingStandGUI.class
 dev\heckerwithahat\betterbrewingstands\GUIs\LevelGuiOff.class
 dev\heckerwithahat\betterbrewingstands\GUIs\LevelGuiOn.class
-dev\heckerwithahat\betterbrewingstands\GUIs\SpeedGuiOff.class
 dev\heckerwithahat\betterbrewingstands\API\CustomItem.class
 dev\heckerwithahat\betterbrewingstands\listeners\OnPlayerClickCustomBlock.class
-dev\heckerwithahat\betterbrewingstands\GUIs\WaterGuiOn.class
 dev\heckerwithahat\betterbrewingstands\GUIs\TimeGuiOff.class
 dev\heckerwithahat\betterbrewingstands\BetterBrewingStands.class
