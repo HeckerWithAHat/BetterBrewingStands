@@ -46,7 +46,7 @@ public class BrewingStandGUI extends Gui {
         fillGui(new Icon(Material.GRAY_STAINED_GLASS_PANE).setName(" "), List.of(10, 12, 14, 16, 19, 21, 23, 28, 30, 32, 34, 48, 50));
 
         for (int i = 0; i < 3; i++) {
-            AdvancedSlot fuelSlot = advancedSlotManager.addAdvancedIcon(10 + (2*i), new Icon(Material.BARRIER).setName("Missing Blaze Powder"));
+            AdvancedSlot fuelSlot = advancedSlotManager.addAdvancedIcon(10 + (2 * i), new Icon(Material.BARRIER).setName("Missing Blaze Powder"));
             fuelSlot.onPrePutClick((e, item) -> {
                 if (!item.getType().equals(Material.BLAZE_POWDER)) {
                     player.sendMessage("You cannot put items here except Blaze Powder!");
@@ -54,7 +54,7 @@ public class BrewingStandGUI extends Gui {
                 }
                 return false;
             });
-            AdvancedSlot wartSlot = advancedSlotManager.addAdvancedIcon(19 + (2*i), new Icon(Material.BARRIER).setName("Missing Nether Wart"));
+            AdvancedSlot wartSlot = advancedSlotManager.addAdvancedIcon(19 + (2 * i), new Icon(Material.BARRIER).setName("Missing Nether Wart"));
             wartSlot.onPrePutClick((e, item) -> {
                 if (!item.getType().equals(Material.NETHER_WART)) {
                     player.sendMessage("You cannot put items here except Nether Wart!");
@@ -62,16 +62,34 @@ public class BrewingStandGUI extends Gui {
                 }
                 return false;
             });
-            AdvancedSlot catalystSlot = advancedSlotManager.addAdvancedIcon(28 + (2*i), new Icon(Material.BARRIER).setName("Missing Effect Catalyst"));
+            AdvancedSlot catalystSlot = advancedSlotManager.addAdvancedIcon(28 + (2 * i), new Icon(Material.BARRIER).setName("Missing Effect Catalyst"));
 
         }
-        addItem(new Icon(new ItemStack(Material.MAGENTA_GLAZED_TERRACOTTA, levelUpgradeCount)), 16);
-        addItem(new Icon(new ItemStack(Material.CLOCK, timeUpgradeCount)), 34);
+        addItem(new Icon(new ItemStack(Material.MAGENTA_GLAZED_TERRACOTTA, levelUpgradeCount)).setName("Potion Level"), 16);
+        addItem(new Icon(new ItemStack(Material.CLOCK, timeUpgradeCount)).setName("Time Level"), 34);
 
 
-        addItem(new Icon(Material.BREWING_STAND).setName("Brew Potion").onClick(e -> brew()), 48);
-        AdvancedSlot bottleInput = advancedSlotManager.addAdvancedIcon(50, new Icon(Material.AIR));
-        bottleInput.onPrePutClick((e, item) -> {
+        addItem(new Icon(Material.BREWING_STAND).setName("Click to Brew Potion").onClick(e -> brew()), 48);
+        AdvancedSlot bottleInput1 = advancedSlotManager.addAdvancedIcon(50, new Icon(Material.BARRIER).setName("Input Potion Bottle"));
+        bottleInput1.onPrePutClick((e, item) -> {
+            if (item.getType() != Material.POTION && item.getType() != Material.SPLASH_POTION && item.getType() != Material.LINGERING_POTION) {
+                player.sendMessage("You can only put Potions here!");
+                return true;
+            }
+            return false;
+        });
+
+        AdvancedSlot bottleInput2 = advancedSlotManager.addAdvancedIcon(51, new Icon(Material.BARRIER).setName("Input Potion Bottle"));
+        bottleInput2.onPrePutClick((e, item) -> {
+            if (item.getType() != Material.POTION && item.getType() != Material.SPLASH_POTION && item.getType() != Material.LINGERING_POTION) {
+                player.sendMessage("You can only put Potions here!");
+                return true;
+            }
+            return false;
+        });
+
+        AdvancedSlot bottleInput3 = advancedSlotManager.addAdvancedIcon(52, new Icon(Material.BARRIER).setName("Input Potion Bottle"));
+        bottleInput3.onPrePutClick((e, item) -> {
             if (item.getType() != Material.POTION && item.getType() != Material.SPLASH_POTION && item.getType() != Material.LINGERING_POTION) {
                 player.sendMessage("You can only put Potions here!");
                 return true;
@@ -92,23 +110,48 @@ public class BrewingStandGUI extends Gui {
             ItemStack fuel = getInventory().getItem(10 + i);
             ItemStack wart = getInventory().getItem(19 + i);
             ItemStack catalyst = getInventory().getItem(28 + i);
-            ItemStack bottle = getInventory().getItem(50);
+            ItemStack bottle1 = getInventory().getItem(50);
+            ItemStack bottle2 = getInventory().getItem(51);
+            ItemStack bottle3 = getInventory().getItem(52);
 
-            if (fuel != null && fuel.getType() == Material.BLAZE_POWDER &&
+            if (fuel != null && fuel.getType() == Material.BLAZE_POWDER && fuel.getAmount() >= (levelUpgradeCount) &&
                     wart != null && wart.getType() == Material.NETHER_WART &&
                     catalyst != null && catalyst.getType() != Material.BARRIER &&
-                    bottle != null && (bottle.getType() == Material.POTION || bottle.getType() == Material.SPLASH_POTION || bottle.getType() == Material.LINGERING_POTION)) {
-
-                // Example: Use catalyst type to determine effect, here using SPEED as a placeholder
-                PotionEffect effect = new PotionEffect(
-                        Objects.requireNonNull(PotionEffectType.getByName(Objects.requireNonNull(BetterBrewingStands.getPlugin(BetterBrewingStands.class).getConfig().getString(String.valueOf(catalyst.getType()))))),
-                        (int) (20 * 30 * Math.pow(1.1, timeUpgradeCount)), // 3 min base, scaled
-                        levelUpgradeCount-1 // PotionEffect levels are 0-based
-                );
-                PotionMeta meta = (PotionMeta) bottle.getItemMeta();
-                meta.addCustomEffect(effect, true);
-                bottle.setItemMeta(meta);
-                fuel.setAmount(fuel.getAmount() - (4* levelUpgradeCount));
+                    ((bottle1 != null && bottle1.getType() != Material.BARRIER) || (bottle2 != null && bottle2.getType() != Material.BARRIER) || (bottle3 != null && bottle3.getType() != Material.BARRIER))) {
+                if (bottle1 != null && (bottle1.getType() == Material.POTION || bottle1.getType() == Material.SPLASH_POTION || bottle1.getType() == Material.LINGERING_POTION)) {
+                    // Example: Use catalyst type to determine effect, here using SPEED as a placeholder
+                    PotionEffect effect = new PotionEffect(
+                            Objects.requireNonNull(PotionEffectType.getByName(Objects.requireNonNull(BetterBrewingStands.getPlugin(BetterBrewingStands.class).getConfig().getString(String.valueOf(catalyst.getType()))))),
+                            (int) (20 * 60 * timeUpgradeCount), // 30 sec base
+                            levelUpgradeCount - 1 // PotionEffect levels are 0-based
+                    );
+                    PotionMeta meta = (PotionMeta) bottle1.getItemMeta();
+                    meta.addCustomEffect(effect, true);
+                    bottle1.setItemMeta(meta);
+                }
+                if (bottle2 != null && (bottle2.getType() == Material.POTION || bottle2.getType() == Material.SPLASH_POTION || bottle2.getType() == Material.LINGERING_POTION)) {
+                    // Example: Use catalyst type to determine effect, here using SPEED as a placeholder
+                    PotionEffect effect = new PotionEffect(
+                            Objects.requireNonNull(PotionEffectType.getByName(Objects.requireNonNull(BetterBrewingStands.getPlugin(BetterBrewingStands.class).getConfig().getString(String.valueOf(catalyst.getType()))))),
+                            (int) (20 * 60 * timeUpgradeCount), // 30 sec base
+                            levelUpgradeCount - 1 // PotionEffect levels are 0-based
+                    );
+                    PotionMeta meta = (PotionMeta) bottle2.getItemMeta();
+                    meta.addCustomEffect(effect, true);
+                    bottle2.setItemMeta(meta);
+                }
+                if (bottle3 != null && (bottle3.getType() == Material.POTION || bottle3.getType() == Material.SPLASH_POTION || bottle3.getType() == Material.LINGERING_POTION)) {
+                    // Example: Use catalyst type to determine effect, here using SPEED as a placeholder
+                    PotionEffect effect = new PotionEffect(
+                            Objects.requireNonNull(PotionEffectType.getByName(Objects.requireNonNull(BetterBrewingStands.getPlugin(BetterBrewingStands.class).getConfig().getString(String.valueOf(catalyst.getType()))))),
+                            (int) (20 * 60 * timeUpgradeCount), // 30 sec base
+                            levelUpgradeCount - 1 // PotionEffect levels are 0-based
+                    );
+                    PotionMeta meta = (PotionMeta) bottle3.getItemMeta();
+                    meta.addCustomEffect(effect, true);
+                    bottle3.setItemMeta(meta);
+                }
+                fuel.setAmount(fuel.getAmount() - levelUpgradeCount);
                 wart.setAmount(wart.getAmount() - 1);
                 catalyst.setAmount(catalyst.getAmount() - 1);
             }
